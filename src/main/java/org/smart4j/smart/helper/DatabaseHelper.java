@@ -16,6 +16,7 @@ public class DatabaseHelper {
     private static final String username = ConfigHelper.getJdbcUsername();
     private static final String password = ConfigHelper.getJdbcPassword();
 
+    //线程关闭后对应的变量自动回收
     private static ThreadLocal<Connection> connContainer = new ThreadLocal<Connection>();
 
     static {
@@ -78,7 +79,8 @@ public class DatabaseHelper {
         }
     }
 
-    //SQL语句执行（未关闭Statement和ResultSet）
+    //SQL语句执行
+    //未显式关闭Statement和ResultSet，
     public static ResultSet executeSql(String sql) throws Exception{
         Statement st = getConnection().createStatement();
         ResultSet rs = st.executeQuery(sql);
